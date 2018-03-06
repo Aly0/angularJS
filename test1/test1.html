@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ng-test1</title>
+</head>
+<body ng-app="test1" ng-controller="testCtrl1">
+    <my-directive ng-transclude>aaaaaaa</my-directive>
+    <div my-directive></div>
+
+    <input type="text" ng-model="name">
+    <ul>
+        <li ng-repeat="number in numbers">{{name | uppercase}}{{number}}</li>
+    </ul>
+    过滤：<input type="text" ng-model="filter">
+    <ol>
+        <li ng-repeat="item in items | filter:filter">{{item}}</li>
+    </ol>
+    <select id="select" ng-init="selectedNumber = numbers[0]" ng-model="selectedNumber" ng-options="number for number in numbers"></select>
+    <select><option ng-repeat = "number in numbers">{{number}}</option></select>
+    <table>
+        <tr ng-repeat="x in users">
+            <td>{{x.name}}</td>
+            <td>{{x.sex}}</td>
+            <td>{{x.age}}</td>
+        </tr>
+    </table>
+    <script src="angular.js"></script> 
+  <script>
+      var test1 = angular.module('test1',[]);
+      test1.controller('testCtrl1',function($scope){
+          $scope.name = 'test';
+          $scope.numbers = [1,2,3,4];
+          $scope.items = ['床前明月光','疑似地上霜','举头望明月','低头思故乡'];
+          $scope.filter = '明月';
+          $scope.users = [
+              {'name':'Lily','sex':'F','age':19},
+              {'name':'Li','sex':'M','age':18},
+              {'name':'Lil','sex':'F','age':29}
+          ];
+          $scope.cost = {name:'lili',age:11};
+      });
+      test1.directive('myDirective',function(){
+          return{
+              restrict:'AE',
+              transclude: true,
+              template:'name:{{cost.name}} age:{{cost.age}}'
+          }
+      });
+  </script> 
+</body>
+</html>
